@@ -25,9 +25,13 @@ func (s RefundStatus) IsFinal() bool {
 		RefundStatusInitiationRejected,
 		RefundStatusInitiationFailed:
 		return true
-	default:
+
+	case RefundStatusInitiationPending,
+		RefundStatusInitiationProcessing:
 		return false
 	}
+
+	panic("unhandled refunds.RefundStatus: " + string(s))
 }
 
 // Refund is the complete refund resource returned by the API.
