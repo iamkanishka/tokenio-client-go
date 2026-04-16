@@ -24,12 +24,17 @@ const (
 // IsFinal reports whether the token request is in a terminal state.
 func (s TokenRequestStatus) IsFinal() bool {
 	switch s {
-	case TokenRequestStatusAuthorised, TokenRequestStatusDeclined,
-		TokenRequestStatusExpired, TokenRequestStatusRevoked:
+	case TokenRequestStatusAuthorised,
+		TokenRequestStatusDeclined,
+		TokenRequestStatusExpired,
+		TokenRequestStatusRevoked:
 		return true
-	default:
+
+	case TokenRequestStatusPending:
 		return false
 	}
+
+	panic("unhandled tokenrequests.TokenRequestStatus: " + string(s))
 }
 
 // TokenRequest represents a stored token request resource.
