@@ -5,9 +5,9 @@ import "github.com/iamkanishka/tokenio-client-go/pkg/common"
 // InitiatePaymentRequest is the body for POST /v2/payments.
 type InitiatePaymentRequest struct {
 	// Initiation is required.
-	Initiation          PaymentInitiation `json:"initiation"`
+	Initiation PaymentInitiation `json:"initiation"`
 	// PispConsentAccepted indicates the PSU granted PISP consent in the TPP UI.
-	PispConsentAccepted bool              `json:"pispConsentAccepted,omitempty"`
+	PispConsentAccepted bool `json:"pispConsentAccepted,omitempty"`
 	// InitialEmbeddedAuth supplies initial embedded auth fields.
 	// Key is the field id from bank metadata; value is the field value.
 	InitialEmbeddedAuth map[string]string `json:"initialEmbeddedAuth,omitempty"`
