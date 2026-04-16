@@ -24,7 +24,7 @@ type Bank struct {
 	Currencies  []string `json:"currencies,omitempty"`
 	BIC         string   `json:"bic,omitempty"`
 	// Provider identifies the bank connectivity provider.
-	Provider     string   `json:"provider,omitempty"`
+	Provider string `json:"provider,omitempty"`
 	// Capabilities lists supported features: "PIS", "AIS", "VRP".
 	Capabilities        []string `json:"capabilities,omitempty"`
 	RequiresCallbackURL bool     `json:"requiresCallbackUrl,omitempty"`
@@ -34,13 +34,13 @@ type Bank struct {
 
 // GetBanksV1Request holds query parameters for GET /banks (v1).
 type GetBanksV1Request struct {
-	IDs            []string
-	Search         string
-	Country        string
-	Start          int
-	Limit          int
-	Provider       string
-	Destination    string
+	IDs         []string
+	Search      string
+	Country     string
+	Start       int
+	Limit       int
+	Provider    string
+	Destination string
 }
 
 // GetBanksV1Response is returned by GET /banks (v1).
@@ -51,14 +51,14 @@ type GetBanksV1Response struct {
 
 // GetBanksV2Request holds query parameters for GET /v2/banks.
 type GetBanksV2Request struct {
-	IDs            []string
-	Search         string
-	Country        string
-	Start          int
-	Limit          int
-	Provider       string
-	Capabilities   []string
-	Sort           string
+	IDs          []string
+	Search       string
+	Country      string
+	Start        int
+	Limit        int
+	Provider     string
+	Capabilities []string
+	Sort         string
 }
 
 // GetBanksV2Response is returned by GET /v2/banks.
