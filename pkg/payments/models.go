@@ -11,28 +11,28 @@ import (
 type Status string
 
 const (
-	StatusInitiationPending	Status = "INITIATION_PENDING"
-	StatusInitiationPendingRedirectAuth	Status = "INITIATION_PENDING_REDIRECT_AUTH"
-	StatusInitiationPendingRedirectAuthVerif	Status = "INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION"
-	StatusInitiationPendingRedirectHP	Status = "INITIATION_PENDING_REDIRECT_HP"
-	StatusInitiationPendingRedirectPBL	Status = "INITIATION_PENDING_REDIRECT_PBL"
-	StatusInitiationPendingEmbeddedAuth	Status = "INITIATION_PENDING_EMBEDDED_AUTH"
-	StatusInitiationPendingEmbeddedAuthVerif	Status = "INITIATION_PENDING_EMBEDDED_AUTH_VERIFICATION"
-	StatusInitiationPendingDecoupledAuth	Status = "INITIATION_PENDING_DECOUPLED_AUTH"
-	StatusInitiationPendingRedemption	Status = "INITIATION_PENDING_REDEMPTION"
-	StatusInitiationPendingRedemptionVerif	Status = "INITIATION_PENDING_REDEMPTION_VERIFICATION"
-	StatusInitiationProcessing	Status = "INITIATION_PROCESSING"
-	StatusInitiationCompleted	Status = "INITIATION_COMPLETED"
-	StatusInitiationRejected	Status = "INITIATION_REJECTED"
-	StatusInitiationRejectedInsufficientFunds	Status = "INITIATION_REJECTED_INSUFFICIENT_FUNDS"
-	StatusInitiationFailed	Status = "INITIATION_FAILED"
-	StatusInitiationDeclined	Status = "INITIATION_DECLINED"
-	StatusInitiationExpired	Status = "INITIATION_EXPIRED"
-	StatusInitiationNoFinalStatusAvailable	Status = "INITIATION_NO_FINAL_STATUS_AVAILABLE"
-	StatusSettlementInProgress	Status = "SETTLEMENT_IN_PROGRESS"
-	StatusSettlementCompleted	Status = "SETTLEMENT_COMPLETED"
-	StatusSettlementIncomplete	Status = "SETTLEMENT_INCOMPLETE"
-	StatusCanceled	Status = "CANCELED"
+	StatusInitiationPending                   Status = "INITIATION_PENDING"
+	StatusInitiationPendingRedirectAuth       Status = "INITIATION_PENDING_REDIRECT_AUTH"
+	StatusInitiationPendingRedirectAuthVerif  Status = "INITIATION_PENDING_REDIRECT_AUTH_VERIFICATION"
+	StatusInitiationPendingRedirectHP         Status = "INITIATION_PENDING_REDIRECT_HP"
+	StatusInitiationPendingRedirectPBL        Status = "INITIATION_PENDING_REDIRECT_PBL"
+	StatusInitiationPendingEmbeddedAuth       Status = "INITIATION_PENDING_EMBEDDED_AUTH"
+	StatusInitiationPendingEmbeddedAuthVerif  Status = "INITIATION_PENDING_EMBEDDED_AUTH_VERIFICATION"
+	StatusInitiationPendingDecoupledAuth      Status = "INITIATION_PENDING_DECOUPLED_AUTH"
+	StatusInitiationPendingRedemption         Status = "INITIATION_PENDING_REDEMPTION"
+	StatusInitiationPendingRedemptionVerif    Status = "INITIATION_PENDING_REDEMPTION_VERIFICATION"
+	StatusInitiationProcessing                Status = "INITIATION_PROCESSING"
+	StatusInitiationCompleted                 Status = "INITIATION_COMPLETED"
+	StatusInitiationRejected                  Status = "INITIATION_REJECTED"
+	StatusInitiationRejectedInsufficientFunds Status = "INITIATION_REJECTED_INSUFFICIENT_FUNDS"
+	StatusInitiationFailed                    Status = "INITIATION_FAILED"
+	StatusInitiationDeclined                  Status = "INITIATION_DECLINED"
+	StatusInitiationExpired                   Status = "INITIATION_EXPIRED"
+	StatusInitiationNoFinalStatusAvailable    Status = "INITIATION_NO_FINAL_STATUS_AVAILABLE"
+	StatusSettlementInProgress                Status = "SETTLEMENT_IN_PROGRESS"
+	StatusSettlementCompleted                 Status = "SETTLEMENT_COMPLETED"
+	StatusSettlementIncomplete                Status = "SETTLEMENT_INCOMPLETE"
+	StatusCanceled                            Status = "CANCELED"
 )
 
 // IsFinal reports whether the payment has reached a terminal state.
@@ -49,9 +49,24 @@ func (s Status) IsFinal() bool {
 		StatusSettlementIncomplete,
 		StatusCanceled:
 		return true
-	default:
+
+	case StatusInitiationPending,
+		StatusInitiationPendingRedirectAuth,
+		StatusInitiationPendingRedirectAuthVerif,
+		StatusInitiationPendingRedirectHP,
+		StatusInitiationPendingRedirectPBL,
+		StatusInitiationPendingEmbeddedAuth,
+		StatusInitiationPendingEmbeddedAuthVerif,
+		StatusInitiationPendingDecoupledAuth,
+		StatusInitiationPendingRedemption,
+		StatusInitiationPendingRedemptionVerif,
+		StatusInitiationProcessing,
+		StatusSettlementInProgress:
 		return false
 	}
+
+	// 👇 REQUIRED for compiler
+	panic("unhandled payments.Status: " + string(s))
 }
 
 // RequiresRedirect reports whether the PSU must be redirected for auth.
@@ -62,9 +77,29 @@ func (s Status) RequiresRedirect() bool {
 		StatusInitiationPendingRedirectHP,
 		StatusInitiationPendingRedirectPBL:
 		return true
-	default:
+
+	case StatusInitiationPending,
+		StatusInitiationPendingEmbeddedAuth,
+		StatusInitiationPendingEmbeddedAuthVerif,
+		StatusInitiationPendingDecoupledAuth,
+		StatusInitiationPendingRedemption,
+		StatusInitiationPendingRedemptionVerif,
+		StatusInitiationProcessing,
+		StatusInitiationCompleted,
+		StatusInitiationRejected,
+		StatusInitiationRejectedInsufficientFunds,
+		StatusInitiationFailed,
+		StatusInitiationDeclined,
+		StatusInitiationExpired,
+		StatusInitiationNoFinalStatusAvailable,
+		StatusSettlementInProgress,
+		StatusSettlementCompleted,
+		StatusSettlementIncomplete,
+		StatusCanceled:
 		return false
 	}
+
+	panic("unhandled payments.Status in RequiresRedirect: " + string(s))
 }
 
 // RequiresEmbeddedAuth reports whether embedded auth fields are needed.
@@ -82,17 +117,17 @@ func (s Status) IsDecoupledAuth() bool {
 type PaymentType string
 
 const (
-	PaymentTypeSingleImmediate     PaymentType = "SINGLE_IMMEDIATE_PAYMENT"
-	PaymentTypeVariableRecurring   PaymentType = "VARIABLE_RECURRING_PAYMENT"
+	PaymentTypeSingleImmediate   PaymentType = "SINGLE_IMMEDIATE_PAYMENT"
+	PaymentTypeVariableRecurring PaymentType = "VARIABLE_RECURRING_PAYMENT"
 )
 
 // PaymentLinkStatus enumerates statuses for pay-by-link payments.
 type PaymentLinkStatus string
 
 const (
-	PaymentLinkStatusActive   PaymentLinkStatus = "LINK_ACTIVE"
-	PaymentLinkStatusExpired  PaymentLinkStatus = "LINK_EXPIRED"
-	PaymentLinkStatusUsed     PaymentLinkStatus = "LINK_USED"
+	PaymentLinkStatusActive  PaymentLinkStatus = "LINK_ACTIVE"
+	PaymentLinkStatusExpired PaymentLinkStatus = "LINK_EXPIRED"
+	PaymentLinkStatusUsed    PaymentLinkStatus = "LINK_USED"
 )
 
 // PaymentInitiation is the full initiation payload sent to the API.
