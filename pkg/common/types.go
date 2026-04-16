@@ -50,14 +50,14 @@ type PartyAccount struct {
 
 // RiskData carries PSU risk and context information for payment initiation.
 type RiskData struct {
-	PsuID                          string           `json:"psuId,omitempty"`
-	PaymentContextCode             string           `json:"paymentContextCode,omitempty"`
-	PaymentPurposeCode             string           `json:"paymentPurposeCode,omitempty"`
-	MerchantCategoryCode           string           `json:"merchantCategoryCode,omitempty"`
-	BeneficiaryAccountType         string           `json:"beneficiaryAccountType,omitempty"`
-	ContractPresentIndicator       bool             `json:"contractPresentIndicator,omitempty"`
-	BeneficiaryPrepopulatedIndicator bool           `json:"beneficiaryPrepopulatedIndicator,omitempty"`
-	DeliveryAddress                *DeliveryAddress `json:"deliveryAddress,omitempty"`
+	PsuID                            string           `json:"psuId,omitempty"`
+	PaymentContextCode               string           `json:"paymentContextCode,omitempty"`
+	PaymentPurposeCode               string           `json:"paymentPurposeCode,omitempty"`
+	MerchantCategoryCode             string           `json:"merchantCategoryCode,omitempty"`
+	BeneficiaryAccountType           string           `json:"beneficiaryAccountType,omitempty"`
+	ContractPresentIndicator         bool             `json:"contractPresentIndicator,omitempty"`
+	BeneficiaryPrepopulatedIndicator bool             `json:"beneficiaryPrepopulatedIndicator,omitempty"`
+	DeliveryAddress                  *DeliveryAddress `json:"deliveryAddress,omitempty"`
 }
 
 // PageInfo holds cursor-based pagination details.
@@ -79,8 +79,8 @@ type ErrorInfo struct {
 // Authentication holds the redirect URL or embedded auth fields returned
 // after payment or consent initiation.
 type Authentication struct {
-	RedirectURL  string            `json:"redirectUrl,omitempty"`
-	EmbeddedAuth []EmbeddedField   `json:"embeddedAuth,omitempty"`
+	RedirectURL  string          `json:"redirectUrl,omitempty"`
+	EmbeddedAuth []EmbeddedField `json:"embeddedAuth,omitempty"`
 }
 
 // EmbeddedField describes a single field required for embedded authentication.
@@ -100,10 +100,10 @@ type RefundAccount struct {
 
 // RefundDetails describes the refund status of a payment.
 type RefundDetails struct {
-	RefundAccount        *RefundAccount `json:"refundAccount,omitempty"`
-	PaymentRefundStatus  string         `json:"paymentRefundStatus,omitempty"`
-	SettledRefundAmount  *Amount        `json:"settledRefundAmount,omitempty"`
-	RemainingRefundAmount *Amount       `json:"remainingRefundAmount,omitempty"`
+	RefundAccount         *RefundAccount `json:"refundAccount,omitempty"`
+	PaymentRefundStatus   string         `json:"paymentRefundStatus,omitempty"`
+	SettledRefundAmount   *Amount        `json:"settledRefundAmount,omitempty"`
+	RemainingRefundAmount *Amount        `json:"remainingRefundAmount,omitempty"`
 }
 
 // FlowType enumerates the supported payment authorization UI flows.
