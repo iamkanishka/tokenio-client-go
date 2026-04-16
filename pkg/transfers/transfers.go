@@ -27,11 +27,17 @@ const (
 // IsFinal reports whether the transfer is in a terminal state.
 func (s TransferStatus) IsFinal() bool {
 	switch s {
-	case TransferStatusSuccess, TransferStatusFailed, TransferStatusCanceled:
+	case TransferStatusSuccess,
+		TransferStatusFailed,
+		TransferStatusCanceled:
 		return true
-	default:
+
+	case TransferStatusPending,
+		TransferStatusProcessing:
 		return false
 	}
+
+	panic("unhandled transfers.TransferStatus: " + string(s))
 }
 
 // Transfer is the complete transfer resource returned by the API.
