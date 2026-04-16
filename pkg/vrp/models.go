@@ -11,25 +11,33 @@ import (
 type ConsentStatus string
 
 const (
-	ConsentStatusPending               ConsentStatus = "PENDING"
-	ConsentStatusPendingMoreInfo       ConsentStatus = "PENDING_MORE_INFO"
-	ConsentStatusPendingRedirectAuth   ConsentStatus = "PENDING_REDIRECT_AUTH"
+	ConsentStatusPending                  ConsentStatus = "PENDING"
+	ConsentStatusPendingMoreInfo          ConsentStatus = "PENDING_MORE_INFO"
+	ConsentStatusPendingRedirectAuth      ConsentStatus = "PENDING_REDIRECT_AUTH"
 	ConsentStatusPendingRedirectAuthVerif ConsentStatus = "PENDING_REDIRECT_AUTH_VERIFICATION"
-	ConsentStatusAuthorized            ConsentStatus = "AUTHORIZED"
-	ConsentStatusRejected              ConsentStatus = "REJECTED"
-	ConsentStatusRevoked               ConsentStatus = "REVOKED"
-	ConsentStatusFailed                ConsentStatus = "FAILED"
+	ConsentStatusAuthorized               ConsentStatus = "AUTHORIZED"
+	ConsentStatusRejected                 ConsentStatus = "REJECTED"
+	ConsentStatusRevoked                  ConsentStatus = "REVOKED"
+	ConsentStatusFailed                   ConsentStatus = "FAILED"
 )
 
 // IsFinal reports whether the consent has reached a terminal state.
 func (s ConsentStatus) IsFinal() bool {
 	switch s {
-	case ConsentStatusAuthorized, ConsentStatusRejected,
-		ConsentStatusRevoked, ConsentStatusFailed:
+	case ConsentStatusAuthorized,
+		ConsentStatusRejected,
+		ConsentStatusRevoked,
+		ConsentStatusFailed:
 		return true
-	default:
+
+	case ConsentStatusPending,
+		ConsentStatusPendingMoreInfo,
+		ConsentStatusPendingRedirectAuth,
+		ConsentStatusPendingRedirectAuthVerif:
 		return false
 	}
+
+	panic("unhandled consent.ConsentStatus: " + string(s))
 }
 
 // RequiresRedirect reports whether the PSU must be redirected for auth.
@@ -58,13 +66,19 @@ type VrpStatus = Status
 // IsFinal reports whether the VRP payment is in a terminal state.
 func (s Status) IsFinal() bool {
 	switch s {
-	case VrpStatusInitiationCompleted, VrpStatusInitiationRejected,
-		VrpStatusInitiationRejectedInsufficient, VrpStatusInitiationFailed,
+	case VrpStatusInitiationCompleted,
+		VrpStatusInitiationRejected,
+		VrpStatusInitiationRejectedInsufficient,
+		VrpStatusInitiationFailed,
 		VrpStatusNoFinalStatus:
 		return true
-	default:
+
+	case VrpStatusInitiationPending,
+		VrpStatusInitiationProcessing:
 		return false
 	}
+
+	panic("unhandled vrp.Status: " + string(s))
 }
 
 // Scheme is the VRP consent scheme type.
