@@ -26,11 +26,17 @@ const (
 // IsFinal reports whether the payout is in a terminal state.
 func (s PayoutStatus) IsFinal() bool {
 	switch s {
-	case PayoutStatusCompleted, PayoutStatusRejected, PayoutStatusFailed:
+	case PayoutStatusCompleted,
+		PayoutStatusRejected,
+		PayoutStatusFailed:
 		return true
-	default:
+
+	case PayoutStatusPending,
+		PayoutStatusProcessing:
 		return false
 	}
+
+	panic("unhandled payouts.PayoutStatus: " + string(s))
 }
 
 // PayoutInitiation is the initiation payload for a payout.
